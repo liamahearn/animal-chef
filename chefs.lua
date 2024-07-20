@@ -175,6 +175,10 @@ function inputDpad(strings)
     local mouseDown = love.mouse.isDown(1)
     local x, y = love.mouse.getPosition()
 
+    x = x / scaleFactor
+    y = y / scaleFactor
+
+
     for key, str in pairs(strings) do
 
         if str == "up" then index = 1
