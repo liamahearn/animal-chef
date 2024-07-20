@@ -1,4 +1,4 @@
--- open -n -a love "/Users/liamahearn/Documents/LOVE2D/ProjectOrganize"
+-- open -n -a love "/Users/liamahearn/Documents/LOVE2D/VersionControl/animal-chef"
 
 require("customers")
 require("chefs")
@@ -13,7 +13,7 @@ function love.load()
     
     love.window.setMode(576 * scaleFactor, 1024 * scaleFactor, {resizable=false})
 
-    debug = 1
+    debug = 0
 
     availableDishes = 4
 
@@ -43,7 +43,7 @@ function love.load()
 
     collisionCode = 0
 
-    arrowInputList = {0, 0, 0, 0}
+    arrowInputList = {0, 0, 0, 0, 0, 0}
 
     layers = {}
 

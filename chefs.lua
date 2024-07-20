@@ -47,7 +47,7 @@ end
 
 function controlChef()
 
-    inputList = {0, 0, 0, 0}
+    inputList = {0, 0, 0, 0, 0, 0}
 
     if(love.keyboard.isDown("up", "down", "left", "right") or inputDpad({"up", "down", "left", "right"})) then
 
@@ -116,12 +116,24 @@ function controlChef()
 
             end
         end
-        
+
         checkWraparound()
 
     elseif((not love.keyboard.isDown("up", "down", "left", "right", "z", "x")) and (not inputDpad({"up", "down", "left", "right"}))) then
 
         chef.state = 0 -- state set to idle
+
+    end
+
+    if(love.keyboard.isDown("z", "x") or inputButton({'z', 'x'})) then
+
+        if(love.keyboard.isDown('x') or inputButton({'x'})) then
+            inputList[5] = 1
+        end
+
+        if(love.keyboard.isDown('z') or inputButton({'z'})) then
+            inputList[6] = 1
+        end
 
     end
 
@@ -188,6 +200,31 @@ function inputDpad(strings)
         end
 
         base = base or (mouseDown and mouseOverlap(x, y, touchRegions[index]))
+
+    end 
+
+    return base
+
+end
+
+function inputButton(strings)
+
+    local base = false
+    local index = 0
+    local mouseDown = love.mouse.isDown(1)
+    local x, y = love.mouse.getPosition()
+
+    x = x / scaleFactor
+    y = y / scaleFactor
+
+
+    for key, str in pairs(strings) do
+
+        if str == 'x' then index = 1
+        elseif str == 'z' then index = 2
+        end
+
+        base = base or (mouseDown and mouseOverlap(x, y, buttonRegions[index]))
 
     end 
 
