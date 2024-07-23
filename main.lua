@@ -39,7 +39,6 @@ function love.load()
     initMenuResources(map_ID)
     speechBubble = love.graphics.newImage("assets/menus/SpeechBubble.png")
     shadow = love.graphics.newImage("assets/effects/shadow1.png")
-    redStation = love.graphics.newImage("assets/maps/map1/STATIONS/RedStation.png")
 
     collisionCode = 0
 
@@ -47,27 +46,7 @@ function love.load()
 
     layers = {}
 
-    --inst. collision zones
-
-        --main fence
-        addCollisionZone(-120, 390, 576 + 240, 20)
-
-        -- bottom barrier
-        addCollisionZone(-120, 1020, 500 + 120, 120)
-        addCollisionZone(576, 1020, 300, 120)
-        
-        -- top barrier
-        addCollisionZone(-120, -120, 500 + 120, 120 + 4)
-        addCollisionZone(576, -120, 20, 340)
-
-        --island barriers
-        addCollisionZone(400, 115, 200, 30)
-        addCollisionZone(400, 0, 20, 150)
-        addCollisionZone(420, 75, 45, 50)
-
-        -- red station (1)
-        addCollisionZone(78, 602, 130, 5)
-        addCollisionZone(78, 512, 38, 90)
+    initMapCollisionZones()
 
 end
 
@@ -79,7 +58,7 @@ function love.update(dt)
 
     arrowInputList = controlChef()
 
-    chefCounterLayering()
+    layers = chefCounterLayering()
 
 end
 
@@ -104,15 +83,14 @@ function love.draw()
 
     drawLayers()
 
-
     displayDpad(arrowInputList)
 
+    -- DEBUG: Draw Collision Zones and Display FPS
+    if debug == 1 then 
+        drawCollisionZones() 
+        love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
 
-    -- DEBUG: Draw Collision Zones
-    if debug == 1 then drawCollisionZones() end
-
-
-    love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+    end
 
     love.graphics.pop()
 
@@ -124,8 +102,12 @@ function drawLayers()
 
     for i = 1, #layers do
 
-        if(layers[i][1] == "red") then drawStation1() end
+        if(layers[i][1] == "station1") then drawStation1() end
         if(layers[i][1] == "chef1") then drawChef() end
+        if(layers[i][1] == "box1") then drawBox(1) end
+        if(layers[i][1] == "box2") then drawBox(2) end
+        if(layers[i][1] == "box3") then drawBox(3) end
+        if(layers[i][1] == "trash1") then drawTrash() end
 
     end
 
