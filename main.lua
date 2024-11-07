@@ -22,8 +22,8 @@ function love.load()
 
     collisionZones = {}
     interactionZones = {}
-    interactionStates = {}
-    tableState = 0
+
+    held = 0 -- holding nothing by default
 
     selectZones = {}
 
@@ -66,6 +66,8 @@ function love.update(dt)
     updateCustomerPosition()
 
     arrowInputList = controlChef()
+
+    holdingInteractions()
 
     layers = chefCounterLayering()
 

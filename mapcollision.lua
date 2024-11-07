@@ -13,6 +13,7 @@ blenderStates = {
 }
 
 box = love.graphics.newImage("assets/maps/map1/STATIONS/Box.png")
+openBox = love.graphics.newImage("assets/maps/map1/STATIONS/OpenBox.png")
 trash = love.graphics.newImage("assets/maps/map1/STATIONS/TrashBox.png")
 boxHighlight = love.graphics.newImage("assets/maps/map1/STATIONS/BoxHighlight.png")
 
@@ -41,17 +42,15 @@ function initMapImg()
 end
 
 function initMapInteractionZones()
-    -- boxes
     -- x, y, w, h, id, state
+    -- boxes
     addInteractionZone(53, 685, 80, 80, 1, 0) -- box 1, id = 1
     addInteractionZone(53 + 192, 685, 80, 80, 2, 0) -- box 2, id = 2
     addInteractionZone(53 + 192 + 192, 685, 80, 80, 3, 0) -- box 3, id = 3
     -- trash
     addInteractionZone(53 + 192 + 192, 500, 80, 80, 4, 0) -- trash, id = 4
-
-
-
-
+    -- table
+    addInteractionZone(50, 500, 115, 110, 5, 0) -- table, id = 5
 
 end
 
@@ -170,7 +169,22 @@ end
 
 function drawStation1()
 
-    love.graphics.draw(blenderStation, 70, 500)
+    if(interactionZones[5][6] == 1) then
+        love.graphics.draw(blenderStationOutline, 70, 500)
+    else    
+        love.graphics.draw(blenderStation, 70, 500)
+    end
+
+    drawBlender()
+
+end
+
+function drawBlender()
+
+    -- base state blender
+    love.graphics.draw(blenderStates[1], 70, 500)
+
+    -- highlight blender?
 
 end
 
@@ -178,11 +192,14 @@ function drawBox(boxID)
 
     distanceConst = 192
     
-    -- draw the box, farther over depending on its ID
-    love.graphics.draw(box, 70 + distanceConst * (boxID - 1), 700)
-    -- draw the highlight outline if applicable
+    -- draw the highlight outline  and open box if applicable
     if(interactionZones[boxID][6] == 1) then
+        -- draw the box, farther over depending on its ID
+        love.graphics.draw(openBox, 70 + distanceConst * (boxID - 1), 700)
         love.graphics.draw(boxHighlight, 70 + distanceConst * (boxID - 1), 700)
+    else
+        -- draw the box, farther over depending on its ID
+        love.graphics.draw(box, 70 + distanceConst * (boxID - 1), 700)
     end
 
 end

@@ -43,6 +43,8 @@ function drawChef()
 
     end    
 
+    drawHeldItem()
+
     if(debug == 1) then
         love.graphics.rectangle("line", chef.x, chef.y, chef.width, chef.height)
     end
@@ -247,6 +249,52 @@ function inputButton(strings)
     end 
 
     return base
+
+end
+
+function holdingInteractions()
+
+
+    -- if interact with trash, set holding ID to 0
+    if(interactionZones[4][6] == 1 and arrowInputList[5] == 1) then
+        held = 0
+        return
+    end    
+
+    if(held == 0) then
+        if(interactionZones[1][6] == 1 and arrowInputList[5] == 1) then
+            held = 1
+            return
+        end  
+        if(interactionZones[2][6] == 1 and arrowInputList[5] == 1) then
+            held = 2
+            return
+        end  
+        if(interactionZones[3][6] == 1 and arrowInputList[5] == 1) then
+            held = 3
+            return
+        end  
+    end
+
+
+end
+
+function drawHeldItem()
+
+    if(held == 0) then return end
+    if(held > 0 and held < 4) then
+        if(held == 1) then
+            love.graphics.draw(bananaOutline, chef.x + 3, chef.y - 22 + (2.5 * math.sin((chef.x)/5)) + (2.5 * math.sin((chef.y)/5)))
+        end
+        if(held == 2) then
+            love.graphics.draw(blueberryOutline, chef.x + 3, chef.y - 22 + (2.5 * math.sin((chef.x)/5)) + (2.5 * math.sin((chef.y)/5)))
+        end
+        if(held == 3) then
+            love.graphics.draw(strawberryOutline, chef.x + 3, chef.y - 22 + (2.5 * math.sin((chef.x)/5)) + (2.5 * math.sin((chef.y)/5)))
+        end
+    end
+
+
 
 end
 
