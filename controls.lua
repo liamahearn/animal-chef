@@ -70,8 +70,11 @@ function showTouchRegions(inputList)
     y = y / scaleFactor
 
     for i=1, #touchRegions do
-        love.graphics.rectangle('line', touchRegions[i][1], touchRegions[i][2], touchRegions[i][3], touchRegions[i][4])
-        
+    
+        if (debug == 1) then
+            love.graphics.rectangle('line', touchRegions[i][1], touchRegions[i][2], touchRegions[i][3], touchRegions[i][4])
+        end
+
         if(mouseDown and mouseOverlap(x, y, touchRegions[i]) or arrows[i] == 1) then
             love.graphics.rectangle('fill', colorRegions[i][1], colorRegions[i][2], colorRegions[i][3], colorRegions[i][4])
         end
@@ -79,16 +82,21 @@ function showTouchRegions(inputList)
     end
 
     for i=1, #buttonRegions do
-        love.graphics.rectangle('line', buttonRegions[i][1], buttonRegions[i][2], buttonRegions[i][3], buttonRegions[i][4])
         
-        if(mouseDown and mouseOverlap(x, y, buttonRegions[i])) then
+        if (debug == 1) then
+            love.graphics.rectangle('line', buttonRegions[i][1], buttonRegions[i][2], buttonRegions[i][3], buttonRegions[i][4])
+        end
+
+        if(mouseDown and mouseOverlap(x, y, buttonRegions[i]) or arrows[i + 4] == 1) then
             love.graphics.rectangle('fill', buttonFillRegions[i][1], buttonFillRegions[i][2], buttonFillRegions[i][3], buttonFillRegions[i][4])
         end
 
     end
 
-    love.graphics.print("mouseX: "..tostring(x), 10, 20)
-    love.graphics.print("mouseY: "..tostring(y), 10, 30)
+    if (debug == 1) then
+        love.graphics.print("mouseX: "..tostring(x), 10, 20)
+        love.graphics.print("mouseY: "..tostring(y), 10, 30)
+    end
 
 end
 
