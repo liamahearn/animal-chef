@@ -22,6 +22,8 @@ function love.load()
 
     collisionZones = {}
     interactionZones = {}
+    interactionStates = {}
+    tableState = 0
 
     selectZones = {}
 
@@ -56,6 +58,8 @@ function love.load()
 end
 
 function love.update(dt)
+
+    updateInteractions()
 
     viewServingStates()
 

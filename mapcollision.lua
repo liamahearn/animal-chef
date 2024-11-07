@@ -14,6 +14,7 @@ blenderStates = {
 
 box = love.graphics.newImage("assets/maps/map1/STATIONS/Box.png")
 trash = love.graphics.newImage("assets/maps/map1/STATIONS/TrashBox.png")
+boxHighlight = love.graphics.newImage("assets/maps/map1/STATIONS/BoxHighlight.png")
 
 bananaOutline = love.graphics.newImage("assets/menus/menu2/bananaOutline.png")
 blueberryOutline = love.graphics.newImage("assets/menus/menu2/blueberryOutline.png")
@@ -41,22 +42,29 @@ end
 
 function initMapInteractionZones()
     -- boxes
-    -- x, y, w, h, id
-    addInteractionZone(53, 685, 80, 80, 1) -- box 1, id = 1
-    addInteractionZone(53 + 192, 685, 80, 80, 2) -- box 2, id = 2
-    addInteractionZone(53 + 192 + 192, 685, 80, 80, 3) -- box 3, id = 3
+    -- x, y, w, h, id, state
+    addInteractionZone(53, 685, 80, 80, 1, 0) -- box 1, id = 1
+    addInteractionZone(53 + 192, 685, 80, 80, 2, 0) -- box 2, id = 2
+    addInteractionZone(53 + 192 + 192, 685, 80, 80, 3, 0) -- box 3, id = 3
+    -- trash
+    addInteractionZone(53 + 192 + 192, 500, 80, 80, 4, 0) -- trash, id = 4
+
+
+
+
+
 end
 
 function initMapCollisionZones()
     -- main fence
-    addCollisionZone(-120, 390, 576 + 240, 20)
+    addCollisionZone(-120, 390, 816, 20)
 
     -- bottom barrier
-    addCollisionZone(-120, 1020, 500 + 120, 120)
+    addCollisionZone(-120, 1020, 620, 120)
     addCollisionZone(576, 1020, 300, 120)
 
     -- top barrier
-    addCollisionZone(-120, -120, 500 + 120, 120 + 4)
+    addCollisionZone(-120, -120, 620, 124)
     addCollisionZone(576, -120, 20, 340)
 
     -- island barriers
@@ -68,13 +76,13 @@ function initMapCollisionZones()
     addCollisionZone(78, 525, 82, 4)
     addCollisionZone(78, 530, 30, 50)
 
-    -- boxes
+    -- boxes (spaced 192 apart)
     addCollisionZone(78, 710, 32, 4)
-    addCollisionZone(78 + 192, 710, 32, 4)
-    addCollisionZone(78 + 192 + 192, 710, 32, 4)
+    addCollisionZone(270, 710, 32, 4)
+    addCollisionZone(462, 710, 32, 4)
 
     -- trash
-    addCollisionZone(78 + 192 + 192, 525, 32, 4)
+    addCollisionZone(462, 525, 32, 4)
 
 end
 
@@ -169,13 +177,22 @@ end
 function drawBox(boxID)
 
     distanceConst = 192
+    
+    -- draw the box, farther over depending on its ID
     love.graphics.draw(box, 70 + distanceConst * (boxID - 1), 700)
+    -- draw the highlight outline if applicable
+    if(interactionZones[boxID][6] == 1) then
+        love.graphics.draw(boxHighlight, 70 + distanceConst * (boxID - 1), 700)
+    end
 
 end
 
 function drawTrash()
 
-    love.graphics.draw(trash, 70 + 192 + 192, 512)
+    love.graphics.draw(trash, 454, 512)
+    if(interactionZones[4][6] == 1) then
+        love.graphics.draw(boxHighlight, 454, 512)
+    end
 
 end
 
@@ -185,7 +202,7 @@ function drawFloatingIngredients()
 
     love.graphics.setColor(255,255,255,alpha)
 
-    if(CheckCollision(chef.x, chef.y, chef.width, chef.height, interactionZones[1][1], interactionZones[1][2], interactionZones[1][3], interactionZones[1][4])) then
+    if(interactionZones[1][6] == 1) then
         love.graphics.setColor(255,255,255,255)
     else
         love.graphics.setColor(255,255,255,alpha)
@@ -193,14 +210,14 @@ function drawFloatingIngredients()
     love.graphics.draw(bananaOutline, 70, 710 - 44 + 2*math.sin(timeLoop/10))
     
     
-    if(CheckCollision(chef.x, chef.y, chef.width, chef.height, interactionZones[2][1], interactionZones[2][2], interactionZones[2][3], interactionZones[2][4])) then
+    if(interactionZones[2][6] == 1) then
         love.graphics.setColor(255,255,255,255)
     else
         love.graphics.setColor(255,255,255,alpha)
     end
     love.graphics.draw(blueberryOutline, 262, 710 - 44 + 2*math.sin((timeLoop + 15)/10))
 
-    if(CheckCollision(chef.x, chef.y, chef.width, chef.height, interactionZones[3][1], interactionZones[3][2], interactionZones[3][3], interactionZones[3][4])) then
+    if(interactionZones[3][6] == 1) then
         love.graphics.setColor(255,255,255,255)
     else 
         love.graphics.setColor(255,255,255,alpha)

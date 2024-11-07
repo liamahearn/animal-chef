@@ -184,6 +184,20 @@ function checkCollisions(x, y, w, h)
 
 end
 
+function updateInteractions()
+
+    for i = 1, #interactionZones do
+
+        if(CheckCollision(chef.x, chef.y, chef.width, chef.height, interactionZones[i][1], interactionZones[i][2], interactionZones[i][3], interactionZones[i][4])) then 
+            interactionZones[i][6] = 1
+        else
+            interactionZones[i][6] = 0
+        end
+
+    end
+
+end
+
 function inputDpad(strings)
 
     local base = false
