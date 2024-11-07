@@ -21,8 +21,10 @@ function love.load()
     characterIndex = 1
 
     collisionZones = {}
+    interactionZones = {}
 
-    --mapTiles = initMapImg()
+    selectZones = {}
+
     mapTiles = initMapImg()
 
     customers = initCustomers()
@@ -47,6 +49,9 @@ function love.load()
     layers = {}
 
     initMapCollisionZones()
+    initMapInteractionZones()
+
+    timeLoop = 0
 
 end
 
@@ -59,6 +64,9 @@ function love.update(dt)
     arrowInputList = controlChef()
 
     layers = chefCounterLayering()
+
+    timeLoop = timeLoop + 1
+    if(timeLoop >= 120) then timeLoop = 0 end
 
 end
 
@@ -83,11 +91,16 @@ function love.draw()
 
     drawLayers()
 
+    -- draw floating UI elements (menu, ingredients)
+
+    drawFloatingIngredients()
+
+
     displayDpad(arrowInputList)
 
     -- DEBUG: Draw Collision Zones and Display FPS
     if debug == 1 then 
-        drawCollisionZones() 
+        drawCollisionZones() -- also draws interaction zones
         love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
 
     end

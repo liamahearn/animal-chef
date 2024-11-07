@@ -15,6 +15,10 @@ blenderStates = {
 box = love.graphics.newImage("assets/maps/map1/STATIONS/Box.png")
 trash = love.graphics.newImage("assets/maps/map1/STATIONS/TrashBox.png")
 
+bananaOutline = love.graphics.newImage("assets/menus/menu2/bananaOutline.png")
+blueberryOutline = love.graphics.newImage("assets/menus/menu2/blueberryOutline.png")
+strawberryOutline = love.graphics.newImage("assets/menus/menu2/strawberryOutline.png")
+
 -- Returns Map Image Resources
 function initMapImg()
     local mT = {}
@@ -33,6 +37,14 @@ function initMapImg()
 
     return mT
 
+end
+
+function initMapInteractionZones()
+    -- boxes
+    -- x, y, w, h, id
+    addInteractionZone(53, 685, 80, 80, 1) -- box 1, id = 1
+    addInteractionZone(53 + 192, 685, 80, 80, 2) -- box 2, id = 2
+    addInteractionZone(53 + 192 + 192, 685, 80, 80, 3) -- box 3, id = 3
 end
 
 function initMapCollisionZones()
@@ -66,6 +78,12 @@ function initMapCollisionZones()
 
 end
 
+function initSelectZones()
+
+    addSelectZone()
+
+end
+
 function drawMapTiles(T)
 
     for k, t in pairs(T) do
@@ -82,11 +100,31 @@ function addCollisionZone(x, y, w, h)
 
 end
 
+function addInteractionZone(x, y, w, h, id)
+
+    table.insert(interactionZones, {x, y, w, h, id})
+
+end
+
+function addSelectZone(x, y, w, h)
+    
+    table.insert(selectZones, {x, y, w, h})
+
+end
+
 function drawCollisionZones()
 
     for i = 1, #collisionZones do
 
         love.graphics.rectangle("line", collisionZones[i][1], collisionZones[i][2], collisionZones[i][3], collisionZones[i][4])
+
+    end
+
+    -- draw interactionZones too I guess
+
+    for i = 1, #interactionZones do
+
+        love.graphics.rectangle("line", interactionZones[i][1], interactionZones[i][2], interactionZones[i][3], interactionZones[i][4])
 
     end
 
@@ -138,5 +176,36 @@ end
 function drawTrash()
 
     love.graphics.draw(trash, 70 + 192 + 192, 512)
+
+end
+
+function drawFloatingIngredients()
+
+    alpha = 0.7
+
+    love.graphics.setColor(255,255,255,alpha)
+
+    if(CheckCollision(chef.x, chef.y, chef.width, chef.height, interactionZones[1][1], interactionZones[1][2], interactionZones[1][3], interactionZones[1][4])) then
+        love.graphics.setColor(255,255,255,255)
+    else
+        love.graphics.setColor(255,255,255,alpha)
+    end
+    love.graphics.draw(bananaOutline, 70, 710 - 44 + 2*math.sin(timeLoop/10))
+    
+    
+    if(CheckCollision(chef.x, chef.y, chef.width, chef.height, interactionZones[2][1], interactionZones[2][2], interactionZones[2][3], interactionZones[2][4])) then
+        love.graphics.setColor(255,255,255,255)
+    else
+        love.graphics.setColor(255,255,255,alpha)
+    end
+    love.graphics.draw(blueberryOutline, 262, 710 - 44 + 2*math.sin((timeLoop + 15)/10))
+
+    if(CheckCollision(chef.x, chef.y, chef.width, chef.height, interactionZones[3][1], interactionZones[3][2], interactionZones[3][3], interactionZones[3][4])) then
+        love.graphics.setColor(255,255,255,255)
+    else 
+        love.graphics.setColor(255,255,255,alpha)
+    end
+    love.graphics.draw(strawberryOutline, 454, 710 - 44 + 2*math.sin((timeLoop + 30)/10))
+    love.graphics.setColor(255,255,255,255)
 
 end

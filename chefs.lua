@@ -43,6 +43,10 @@ function drawChef()
 
     end    
 
+    if(debug == 1) then
+        love.graphics.rectangle("line", chef.x, chef.y, chef.width, chef.height)
+    end
+
 end
 
 function controlChef()
