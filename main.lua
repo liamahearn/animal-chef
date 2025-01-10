@@ -13,7 +13,7 @@ function love.load()
     
     love.window.setMode(576 * scaleFactor, 1024 * scaleFactor, {resizable=false})
 
-    debug = 0
+    debug = 1
 
     availableDishes = 4
 
@@ -24,6 +24,7 @@ function love.load()
     interactionZones = {}
 
     held = 0 -- holding nothing by default
+    blenderState = 1
 
     selectZones = {}
 
@@ -108,6 +109,7 @@ function love.draw()
     if debug == 1 then 
         drawCollisionZones() -- also draws interaction zones
         love.graphics.print("Current FPS: "..tostring(love.timer.getFPS( )), 10, 10)
+        love.graphics.print("Blender State: "..tostring(blenderState), 10, 60)
 
     end
 

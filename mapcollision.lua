@@ -2,14 +2,14 @@
 blenderStation = love.graphics.newImage("assets/maps/map1/STATIONS/LargeTableBase.png")
 blenderStationOutline = love.graphics.newImage("assets/maps/map1/STATIONS/LargeTableBaseOutline.png")
 blenderStates = {
-    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender000.png"),
-    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender001.png"),
-    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender010.png"),
-    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender100.png"),
-    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender011.png"),
-    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender110.png"),
-    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender101.png"),
-    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender111.png")
+    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender000.png"), -- 1
+    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender001.png"), -- 2 (1 + 1)
+    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender010.png"), -- 3 (1 + 2)
+    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender100.png"), -- 4 (1 + 3)
+    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender011.png"), -- 5 (1 + 3 + 2) 6
+    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender101.png"), -- 6 (1 + 4 + 2) 7
+    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender110.png"), -- 7 (1 + 4 + 3) 8
+    love.graphics.newImage("assets/maps/map1/STATIONS/Blender/Blender111.png")  -- 9
 }
 
 box = love.graphics.newImage("assets/maps/map1/STATIONS/Box.png")
@@ -182,7 +182,7 @@ end
 function drawBlender()
 
     -- base state blender
-    love.graphics.draw(blenderStates[1], 70, 500)
+    love.graphics.draw(blenderStates[blenderState], 70, 500)
 
     -- highlight blender?
 

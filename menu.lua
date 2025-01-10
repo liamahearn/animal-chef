@@ -86,3 +86,22 @@ function initMenuResources(map_ID)
 
 end
 
+-- takes in fruit ID from 'held'
+function addFruit(fruitID)
+    
+    --blender full
+    if(blenderState < 8) then
+
+        -- if blender already has something in it
+        if(blenderState > 1) then
+            blenderState = blenderState + fruitID - 1
+            blenderState = 8
+        else
+            -- blender empty
+            blenderState = fruitID + 1
+
+        end
+
+    
+    end
+end

@@ -261,6 +261,14 @@ function holdingInteractions()
         return
     end    
 
+    -- interacting with station
+    if(interactionZones[5][6] == 1 and arrowInputList[5] == 1) then
+        addFruit(held)
+        held = 0
+        return
+    end
+
+    -- picking up fruits from crates
     if(held == 0) then
         if(interactionZones[1][6] == 1 and arrowInputList[5] == 1) then
             held = 1
